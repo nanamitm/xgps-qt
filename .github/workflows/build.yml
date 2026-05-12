@@ -1,0 +1,87 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  windows-release:
+    name: Windows Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.9.2"
+          host: windows
+          target: desktop
+          arch: win64_mingw
+
+      - name: Configure
+        shell: pwsh
+        run: |
+          cmake -S . -B build/windows-release -G Ninja `
+            -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        shell: pwsh
+        run: cmake --build build/windows-release
+
+      - name: Deploy Qt runtime
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist/xgps-qt-windows | Out-Null
+          Copy-Item -Force build/windows-release/xgps-qt.exe dist/xgps-qt-windows/
+          Copy-Item -Force readme.txt dist/xgps-qt-windows/
+          windeployqt --release --compiler-runtime dist/xgps-qt-windows/xgps-qt.exe
+
+      - name: Create zip
+        shell: pwsh
+        run: Compress-Archive -Path dist/xgps-qt-windows/* -DestinationPath dist/xgps-qt-windows.zip
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xgps-qt-windows
+          path: dist/xgps-qt-windows.zip
+
+  linux-build:
+    name: Linux Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgl1-mesa-dev libxkbcommon-dev
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.9.2"
+          host: linux
+          target: desktop
+          arch: linux_gcc_64
+
+      - name: Configure
+        run: cmake -S . -B build/linux-release -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build/linux-release
+
+      - name: Upload Linux binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: xgps-qt-linux-build
+          path: build/linux-release/xgps-qt

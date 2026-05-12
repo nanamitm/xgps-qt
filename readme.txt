@@ -92,6 +92,24 @@ Qt のインストール場所が異なる場合は、引数で変更できま�
       -MingwDir C:\Qt\Tools\mingw1310_64
 
 
+GitHub Actions
+--------------
+
+GitHub Actions では以下を自動実行します。
+
+- Windows Release ビルド
+- windeployqt による Windows 配布 zip 作成
+- Linux Release ビルド確認
+
+workflow ファイル:
+
+    .github\workflows\build.yml
+
+main ブランチへの push、pull request、v で始まるタグ、または手動実行で動作します。
+Windows の成果物は Actions の artifact として xgps-qt-windows.zip が保存されます。
+Linux はまずビルド確認と実行ファイル artifact の作成まで対応しています。
+
+
 配布時の注意
 ------------
 
