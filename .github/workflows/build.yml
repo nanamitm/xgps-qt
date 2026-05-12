@@ -135,8 +135,7 @@ jobs:
             libgl1-mesa-dev \
             libxkbcommon-dev \
             imagemagick \
-            qt6-base-dev \
-            libqt6network6-dev
+            qt6-base-dev
 
       - name: Configure
         run: cmake -S . -B build/linux-release -G Ninja -DCMAKE_BUILD_TYPE=Release
