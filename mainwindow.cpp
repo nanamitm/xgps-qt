@@ -526,7 +526,7 @@ QString MainWindow::timeText(const QString &time) const
     }
 
     if (dateTime.timeSpec() == Qt::LocalTime) {
-        dateTime = QDateTime(dateTime.date(), dateTime.time(), QTimeZone::UTC);
+        dateTime = QDateTime(dateTime.date(), dateTime.time(), Qt::UTC);
     }
 
     if (m_timeFormat == TimeFormat::Local) {
