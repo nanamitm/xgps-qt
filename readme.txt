@@ -114,29 +114,6 @@ PC で起動できません。
 platforms\qwindows.dll は platforms フォルダごと必要です。
 
 
-GitHub で管理する場合
----------------------
-
-GitHub のリポジトリには、基本的にソースコードだけを入れてください。
-Qt の DLL、exe、ビルドディレクトリ、Qt Creator の個人設定は Git 管理に
-含めない方針です。
-
-このプロジェクトでは .gitignore により、以下を除外するようにしています。
-
-    build\
-    dist\
-    .qtcreator\
-    CMakeLists.txt.user
-    *.exe
-    *.dll
-
-配布用の exe と Qt DLL 一式は、Git の通常コミットではなく GitHub Releases に
-zip ファイルとして添付する運用を推奨します。
-
-ローカルで scripts\build_release_windows.ps1 -Zip を実行して作成した
-xgps-qt-windows.zip を、GitHub の Releases に添付してください。
-
-
 ライセンスについて
 ------------------
 
@@ -255,4 +232,3 @@ Raw JSON を有効にすると、gpsd から受信した JSON パケットを画
 - Raw JSON パネル表示の on/off
 
 保存された設定を初期化したい場合は Reset Settings を使用してください。
-
