@@ -44,6 +44,7 @@ jobs:
           Copy-Item -Force build/windows-release/Release/xgps-qt.exe dist/xgps-qt-windows/
           Copy-Item -Force readme.txt dist/xgps-qt-windows/
           windeployqt --release --compiler-runtime dist/xgps-qt-windows/xgps-qt.exe
+          Remove-Item -Force dist/xgps-qt-windows/vc_redist.x64.exe -ErrorAction SilentlyContinue
 
       - name: Create zip
         shell: pwsh
