@@ -4,7 +4,7 @@ param(
     [string]$CMakeExe = "C:\Qt\Tools\CMake_64\bin\cmake.exe",
     [string]$NinjaExe = "C:\Qt\Tools\Ninja\ninja.exe",
     [string]$BuildDir = "build\release-windows",
-    [string]$DistDir = "dist\GPS_SKY_VIEW_release",
+    [string]$DistDir = "dist\xgps-qt-windows",
     [switch]$Zip
 )
 
@@ -33,7 +33,7 @@ $QtPlugins = Join-Path $QtDir "plugins"
 $MingwBin = Join-Path $MingwDir "bin"
 $CompilerExe = Join-Path $MingwBin "g++.exe"
 $WindeployQtExe = Join-Path $QtBin "windeployqt.exe"
-$TargetExe = Join-Path $BuildPath "GPS_SKY_VIEW.exe"
+$TargetExe = Join-Path $BuildPath "xgps-qt.exe"
 
 Write-Host "Project: $ProjectRoot"
 Write-Host "Build:   $BuildPath"
@@ -91,7 +91,7 @@ Copy-Item -Force -LiteralPath $TargetExe -Destination $DistPath
 $deploySucceeded = $false
 if (Test-Path -LiteralPath $WindeployQtExe) {
     try {
-        & $WindeployQtExe --release --compiler-runtime (Join-Path $DistPath "GPS_SKY_VIEW.exe")
+        & $WindeployQtExe --release --compiler-runtime (Join-Path $DistPath "xgps-qt.exe")
         if ($LASTEXITCODE -eq 0) {
             $deploySucceeded = $true
         }
@@ -117,7 +117,7 @@ if (-not $deploySucceeded) {
 Copy-Item -Force -LiteralPath (Join-Path $ProjectRoot "readme.txt") -Destination $DistPath
 
 if ($Zip) {
-    $ZipPath = Join-Path (Split-Path -Parent $DistPath) "GPS_SKY_VIEW_release.zip"
+    $ZipPath = Join-Path (Split-Path -Parent $DistPath) "xgps-qt-windows.zip"
     if (Test-Path -LiteralPath $ZipPath) {
         Remove-Item -LiteralPath $ZipPath -Force
     }

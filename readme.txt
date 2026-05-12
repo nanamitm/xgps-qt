@@ -1,9 +1,23 @@
-GPS_SKY_VIEW
-============
+xgps-qt
+=======
 
-GPS_SKY_VIEW は、gpsd の SKY/TPV データを表示するxgpsを Qt 6に移植した アプリケーションです。
-gpsd サーバーへ TCP 接続し、衛星の sky view、基本的な測位情報、
+xgps-qt は、gpsd 付属の xgps を Qt 6 ベースで再実装することを目的とした
+GPS/GNSS 表示アプリケーションです。
+
+gpsd サーバーへ TCP 接続し、衛星の sky view、TPV の基本測位情報、
 衛星一覧を表示します。
+
+
+動作条件
+--------
+
+- Windows
+- TCP 接続可能な gpsd サーバー
+- gpsd の標準ポート: 2947
+
+現在のデフォルト接続先:
+
+    localhost
 
 
 Qt Creator でのビルド方法
@@ -12,7 +26,7 @@ Qt Creator でのビルド方法
 1. Qt Creator を起動します。
 2. ファイル、またはプロジェクトを開く操作で以下のファイルを開きます。
 
-       \GPS_SKY_VIEW\CMakeLists.txt
+       CMakeLists.txt
 
 3. Kit は以下を選択します。
 
@@ -21,6 +35,10 @@ Qt Creator でのビルド方法
 4. Configure Project を実行します。
 5. Debug または Release 構成を選びます。
 6. ビルドを実行します。
+
+ビルドに成功すると、Windows では以下の実行ファイルが作成されます。
+
+    xgps-qt.exe
 
 Qt Creator が作成するビルドフォルダ名は環境によって変わります。
 例:
@@ -61,11 +79,11 @@ zip まで作成する場合:
 
 1. CMake で Release 構成を作成
 2. Ninja でビルド
-3. dist\GPS_SKY_VIEW_release\ を作成
-4. GPS_SKY_VIEW.exe をコピー
+3. dist\xgps-qt-windows\ を作成
+4. xgps-qt.exe をコピー
 5. windeployqt、または手動コピーで Qt DLL と platforms\qwindows.dll を配置
 6. readme.txt を配布フォルダへコピー
-7. -Zip 指定時は GPS_SKY_VIEW_release.zip を作成
+7. -Zip 指定時は xgps-qt-windows.zip を作成
 
 Qt のインストール場所が異なる場合は、引数で変更できます。
 
@@ -73,13 +91,50 @@ Qt のインストール場所が異なる場合は、引数で変更できま�
       -QtDir C:\Qt\6.9.2\mingw_64 `
       -MingwDir C:\Qt\Tools\mingw1310_64
 
-作成される配布フォルダ:
 
-    dist\GPS_SKY_VIEW_release\
+配布時の注意
+------------
 
-作成される zip:
+Qt Creator で Release ビルドした xgps-qt.exe を他の PC で実行するには、
+Qt の DLL と plugin を同梱する必要があります。exe 単体では Qt が入っていない
+PC で起動できません。
 
-    dist\GPS_SKY_VIEW_release.zip
+最低限、配布フォルダには以下を含めてください。
+
+    xgps-qt.exe
+    Qt6Core.dll
+    Qt6Gui.dll
+    Qt6Network.dll
+    Qt6Widgets.dll
+    libgcc_s_seh-1.dll
+    libstdc++-6.dll
+    libwinpthread-1.dll
+    platforms\qwindows.dll
+
+platforms\qwindows.dll は platforms フォルダごと必要です。
+
+
+GitHub で管理する場合
+---------------------
+
+GitHub のリポジトリには、基本的にソースコードだけを入れてください。
+Qt の DLL、exe、ビルドディレクトリ、Qt Creator の個人設定は Git 管理に
+含めない方針です。
+
+このプロジェクトでは .gitignore により、以下を除外するようにしています。
+
+    build\
+    dist\
+    .qtcreator\
+    CMakeLists.txt.user
+    *.exe
+    *.dll
+
+配布用の exe と Qt DLL 一式は、Git の通常コミットではなく GitHub Releases に
+zip ファイルとして添付する運用を推奨します。
+
+ローカルで scripts\build_release_windows.ps1 -Zip を実行して作成した
+xgps-qt-windows.zip を、GitHub の Releases に添付してください。
 
 
 ライセンスについて
@@ -200,3 +255,4 @@ Raw JSON を有効にすると、gpsd から受信した JSON パケットを画
 - Raw JSON パネル表示の on/off
 
 保存された設定を初期化したい場合は Reset Settings を使用してください。
+
