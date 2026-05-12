@@ -23,7 +23,10 @@ jobs:
           version: "6.9.2"
           host: windows
           target: desktop
-          arch: win64_mingw
+          arch: win64_msvc2022_64
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure
         shell: pwsh
