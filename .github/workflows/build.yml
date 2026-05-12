@@ -130,15 +130,13 @@ jobs:
       - name: Install system packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y ninja-build libgl1-mesa-dev libxkbcommon-dev imagemagick
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: "6.9.2"
-          host: linux
-          target: desktop
-          arch: linux_gcc_arm64
+          sudo apt-get install -y \
+            ninja-build \
+            libgl1-mesa-dev \
+            libxkbcommon-dev \
+            imagemagick \
+            qt6-base-dev \
+            libqt6network6-dev
 
       - name: Configure
         run: cmake -S . -B build/linux-release -G Ninja -DCMAKE_BUILD_TYPE=Release
@@ -167,6 +165,7 @@ jobs:
           Categories=Utility;
           EOF
 
+          QMAKE=$(which qmake6 || which qmake) \
           APPIMAGE_EXTRACT_AND_RUN=1 \
           OUTPUT=xgps-qt-linux-aarch64.AppImage \
           ./linuxdeploy-aarch64.AppImage \
