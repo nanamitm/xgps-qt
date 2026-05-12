@@ -1,0 +1,43 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# Distribution artifacts
+dist/
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.lib
+*.a
+
+# Qt Creator user/local settings
+*.user
+*.user.*
+.qtcreator/
+CMakeUserPresets.json
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+*.ninja
+.ninja_deps
+.ninja_log
+
+# Qt generated files
+*_autogen/
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# Windows/editor noise
+Thumbs.db
+Desktop.ini
+*.swp
+*.tmp
+*.bak
+*~
