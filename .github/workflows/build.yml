@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
@@ -51,7 +51,7 @@ jobs:
         run: Compress-Archive -Path dist/xgps-qt-windows/* -DestinationPath dist/xgps-qt-windows.zip
 
       - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: xgps-qt-windows
           path: dist/xgps-qt-windows.zip
@@ -62,7 +62,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install system packages
         run: |
@@ -114,7 +114,7 @@ jobs:
             --output appimage
 
       - name: Upload Linux AppImage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: xgps-qt-linux
           path: xgps-qt-linux-x86_64.AppImage
@@ -125,7 +125,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install system packages
         run: |
@@ -175,7 +175,7 @@ jobs:
             --output appimage
 
       - name: Upload Linux ARM64 AppImage
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: xgps-qt-linux-arm64
           path: xgps-qt-linux-aarch64.AppImage
@@ -190,25 +190,25 @@ jobs:
 
     steps:
       - name: Download Windows artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: xgps-qt-windows
           path: dist/
 
       - name: Download Linux AppImage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: xgps-qt-linux
           path: dist/
 
       - name: Download Linux ARM64 AppImage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: xgps-qt-linux-arm64
           path: dist/
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             dist/xgps-qt-windows.zip
