@@ -52,6 +52,7 @@ jobs:
         with:
           name: xgps-qt-windows
           path: dist/xgps-qt-windows.zip
+          retention-days: 7
 
   linux-appimage:
     name: Linux AppImage
@@ -115,6 +116,7 @@ jobs:
         with:
           name: xgps-qt-linux
           path: xgps-qt-linux-x86_64.AppImage
+          retention-days: 7
 
   linux-appimage-arm64:
     name: Linux AppImage (ARM64)
@@ -176,6 +178,7 @@ jobs:
         with:
           name: xgps-qt-linux-arm64
           path: xgps-qt-linux-aarch64.AppImage
+          retention-days: 7
 
   release:
     name: Create Release
