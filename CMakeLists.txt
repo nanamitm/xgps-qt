@@ -26,6 +26,7 @@ set(PROJECT_SOURCES
         qgpssatitem.cpp
         qgpsdclient.h
         qgpsdclient.cpp
+        resources.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -56,6 +57,10 @@ target_link_libraries(xgps_qt PRIVATE
     Qt${QT_VERSION_MAJOR}::Network
 )
 
+if(WIN32)
+    target_sources(xgps_qt PRIVATE app-icon.rc)
+endif()
+
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
@@ -81,4 +86,3 @@ install(TARGETS xgps_qt
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(xgps_qt)
 endif()
-

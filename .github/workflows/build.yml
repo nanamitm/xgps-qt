@@ -91,7 +91,7 @@ jobs:
         run: |
           cmake --install build/linux-release --prefix AppDir/usr
 
-          convert -size 256x256 xc:'#1e90ff' xgps-qt.png
+          cp assets/app-icon.png xgps-qt.png
 
           cat > xgps-qt.desktop << 'EOF'
           [Desktop Entry]
@@ -152,7 +152,7 @@ jobs:
         run: |
           cmake --install build/linux-release --prefix AppDir/usr
 
-          convert -size 256x256 xc:'#1e90ff' xgps-qt.png
+          cp assets/app-icon.png xgps-qt.png
 
           cat > xgps-qt.desktop << 'EOF'
           [Desktop Entry]
